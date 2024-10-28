@@ -19,12 +19,11 @@ let user = [
 ]
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
-
 app.get('/about', (req, res) => {
-    res.sendFile(__dirname + '/public/about.html');    
+    res.sendFile(__dirname + '/about.html');    
 });
 
 app.get('/users', (req, res) => {
