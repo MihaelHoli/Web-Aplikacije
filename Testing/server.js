@@ -3,18 +3,25 @@ const app = express();
 
 const PORT = 3000;
 
-const pizzaInfo = {
-  name: 'Margherita',
-  ingredients: ['tomato', 'mozzarella', 'basil'],
-  price: 8.99
-};
-
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+const pizzas = [
+  { id: 1, name: 'Margherita', ingredients: ['tomato', 'mozzarella', 'basil'], price: 8.99 },
+  { id: 2, name: 'Pepperoni', ingredients: ['tomato', 'mozzarella', 'pepperoni'], price: 9.99 },
+  { id: 3, name: 'Hawaiian', ingredients: ['tomato', 'mozzarella', 'ham', 'pineapple'], price: 10.99 }
+];
 
 app.get('/Testing/pizze', (req, res) => {
-  res.json(pizzaInfo);
+  res.json(pizzas);
+});
+
+app.get('/Testing/pizze/:id', (req, res) => {
+  const pizzaId = parseInt(req.params.id, 10);
+  const pizza = pizzas.find(p => p.id === pizzaId);
+
+  if (pizza) {
+    res.json(pizza);
+  } else {
+    res.status(404).send('Pizza not found');
+  }
 });
 
 app.listen(PORT, error => {
