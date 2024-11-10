@@ -1,14 +1,5 @@
 const express = require('express');
-
-const app = express();
-
-const PORT = 3000;
-
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+const router = express.Router();
 
 const pizze = [
   { id: 1, naziv: 'Margerita', cijena: 7.0 },
@@ -18,11 +9,11 @@ const pizze = [
   { id: 5, naziv: 'Quattro formaggi', cijena: 15.0 }
 ];
 
-app.get('/pizze', (req, res) => {
+router.get('/', (req, res) => {
   return res.json(pizze);
 });
 
-app.get('/pizze/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const id_pizza = req.params.id;
 
   if (isNaN(id_pizza)) {
@@ -37,28 +28,28 @@ app.get('/pizze/:id', (req, res) => {
   return res.json({ message: 'Nema pizze' });
 });
 
-app.put("/pizza/:id", (req, res) => {
-    let id_pizza_req = req.params.id;
-    let tijelo_zahtjeva = req.body;
+router.put('/:id', (req, res) => {
+  let id_pizza_req = req.params.id;
+  let tijelo_zahtjeva = req.body;
 
-    if(isNaN(id_pizza_req)){
-        return res.json({ message: 'Proslijedili ste parametar koji nije broj' });
-    }
- 
-    let index = pizze.findIndex(pizza => pizza.id == id_pizza_req);
+  if (isNaN(id_pizza_req)) {
+    return res.json({ message: 'Proslijedili ste parametar koji nije broj' });
+  }
 
-    if (index === -1) {
-        return res.json({ message: 'Pizza s tim ID-em ne postoji' });
-    }
+  let index = pizze.findIndex(pizza => pizza.id == id_pizza_req);
 
-    pizze[index] = tijelo_zahtjeva;
+  if (index === -1) {
+    return res.json({ message: 'Pizza s tim ID-em ne postoji' });
+  }
 
-    console.log("pizza array", pizze);
+  pizze[index] = tijelo_zahtjeva;
 
-    return res.json({ message: 'Pizza uspješno ažurirana' });
+  console.log("pizza array", pizze);
+
+  return res.json({ message: 'Pizza uspješno ažurirana' });
 });
 
-app.patch('/pizza/:id/cijena', (req, res) => {
+router.patch('/:id/cijena', (req, res) => {
   const id_pizza = req.params.id;
   const { cijena } = req.body;
 
@@ -81,10 +72,4 @@ app.patch('/pizza/:id/cijena', (req, res) => {
   return res.json({ message: 'Cijena pizze uspješno ažurirana', pizza });
 });
 
-app.listen(PORT, error => {
-  if (error) {
-    console.error(`Greška prilikom pokretanja poslužitelja: ${error.message}`);
-  } else {
-    console.log(`Server je pokrenut na http://localhost:${PORT}`);
-  }
-});
+module.exports = router;
