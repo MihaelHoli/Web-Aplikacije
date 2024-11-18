@@ -10,12 +10,12 @@ app.use(express.json());
 app.use('/proizvodi', proizvodiRouter);
 app.use('/narudzbe', narudzbeRouter);
 
-let port = 3000;
+let PORT = 3000;
 
-app.listen(port, error => {
+app.listen(PORT, error => {
     if (error) {
-        console.error(error);
+    console.error(`Greška prilikom pokretanja poslužitelja: ${error.message}`);
     } else {
-        console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server dela na http://localhost:${PORT}`);
     }
-});
+    });

@@ -1,5 +1,5 @@
 import express from 'express';
-import { proizvodi } from '../data.js'; // Add this line
+import { proizvodi } from '../data.js';
 
 const router = express.Router();
 
